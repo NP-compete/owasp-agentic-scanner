@@ -58,6 +58,37 @@ owasp-scan list-rules
 eval(expression)  # noqa: AA05
 ```
 
+## Pre-commit Integration
+
+### As a Pre-commit Hook (Recommended)
+
+Add to your `.pre-commit-config.yaml`:
+
+```yaml
+repos:
+  - repo: https://github.com/NP-compete/owasp-agentic-ai-security-scanner
+    rev: v0.1.0
+    hooks:
+      - id: owasp-agentic-scan
+        args: [--min-severity, high]
+```
+
+### As a Local Hook
+
+If you have the scanner installed locally:
+
+```yaml
+repos:
+  - repo: local
+    hooks:
+      - id: owasp-agentic-scan
+        name: OWASP Agentic AI Scanner
+        entry: owasp-scan scan src --min-severity high
+        language: system
+        pass_filenames: false
+        always_run: true
+```
+
 ## CI/CD Integration
 
 ### GitHub Actions
@@ -67,6 +98,18 @@ eval(expression)  # noqa: AA05
 - uses: github/codeql-action/upload-sarif@v4
   with:
     sarif_file: results.sarif
+```
+
+### GitLab CI
+
+```yaml
+security-scan:
+  script:
+    - pip install owasp-agentic-scanner
+    - owasp-scan scan src --format json --output gl-sast-report.json
+  artifacts:
+    reports:
+      sast: gl-sast-report.json
 ```
 
 ## Development
