@@ -72,4 +72,3 @@ clean:
 # Usage example
 scan:
 	uv run owasp-scan scan . --rules goal_hijack,code_execution
-

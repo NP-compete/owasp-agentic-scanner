@@ -118,4 +118,3 @@ jobs:
         with:
           name: sarif-results
           path: results.sarif
-
