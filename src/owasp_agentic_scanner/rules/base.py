@@ -2,10 +2,11 @@
 
 import re
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
-from typing import Pattern
+from re import Pattern
+from typing import ClassVar
 
 
 class Severity(Enum):
@@ -33,7 +34,7 @@ class Finding:
     owasp_category: str
     confidence: str = "medium"
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> dict[str, str | int]:
         """Convert finding to dictionary."""
         return {
             "rule_id": self.rule_id,
@@ -63,17 +64,23 @@ class DetectionPattern:
 class BaseRule(ABC):
     """Base class for all detection rules."""
 
-    rule_id: str = ""
-    rule_name: str = ""
-    owasp_category: str = ""
-    description: str = ""
-    patterns: list[DetectionPattern] = field(default_factory=list)
+    rule_id: ClassVar[str] = ""
+    rule_name: ClassVar[str] = ""
+    owasp_category: ClassVar[str] = ""
+    description: ClassVar[str] = ""
 
     # File extensions to scan
-    file_extensions: set[str] = {".py", ".js", ".ts", ".yaml", ".yml", ".json"}
+    file_extensions: ClassVar[set[str]] = {
+        ".py",
+        ".js",
+        ".ts",
+        ".yaml",
+        ".yml",
+        ".json",
+    }
 
     # Directories to skip
-    skip_dirs: set[str] = {
+    skip_dirs: ClassVar[set[str]] = {
         "__pycache__",
         ".git",
         "node_modules",
@@ -145,4 +152,3 @@ class BaseRule(ABC):
 def pattern(regex: str, flags: int = re.IGNORECASE) -> Pattern[str]:
     """Compile a regex pattern with common flags."""
     return re.compile(regex, flags)
-

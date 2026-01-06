@@ -1,11 +1,11 @@
 """JSON reporter for scan results."""
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
-    from rules.base import Finding
+    from owasp_agentic_scanner.rules.base import Finding
 
 
 class JsonReporter:
@@ -16,7 +16,9 @@ class JsonReporter:
         report_data = self._build_report(findings, scan_path)
         return json.dumps(report_data, indent=2)
 
-    def _build_report(self, findings: list["Finding"], scan_path: str) -> dict[str, Any]:
+    def _build_report(
+        self, findings: list["Finding"], scan_path: str
+    ) -> dict[str, Any]:
         """Build the report data structure."""
         # Count by severity
         severity_counts: dict[str, int] = {}
@@ -32,7 +34,7 @@ class JsonReporter:
 
         return {
             "scan_metadata": {
-                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "timestamp": datetime.now(UTC).isoformat(),
                 "scan_path": scan_path,
                 "scanner": "OWASP Agentic AI Top 10 Scanner",
                 "version": "0.1.0",
@@ -52,4 +54,3 @@ class JsonReporter:
         report = self.report(findings, scan_path)
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(report)
-

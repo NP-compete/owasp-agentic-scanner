@@ -1,6 +1,11 @@
 """AA09: Overreliance on Agentic Outputs detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class OverrelianceRule(BaseRule):
@@ -67,11 +72,12 @@ class OverrelianceRule(BaseRule):
                 confidence="low",
             ),
             DetectionPattern(
-                pattern=pattern(r"fact.*check.*false|verify.*false|validate.*=\s*False"),
+                pattern=pattern(
+                    r"fact.*check.*false|verify.*false|validate.*=\s*False"
+                ),
                 message="Validation explicitly disabled",
                 recommendation="Always enable validation for agent outputs.",
                 severity=Severity.HIGH,
                 confidence="high",
             ),
         ]
-

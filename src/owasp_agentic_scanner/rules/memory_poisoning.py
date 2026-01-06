@@ -1,6 +1,11 @@
 """AA06: Memory Poisoning detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class MemoryPoisoningRule(BaseRule):
@@ -26,7 +31,9 @@ class MemoryPoisoningRule(BaseRule):
                 confidence="medium",
             ),
             DetectionPattern(
-                pattern=pattern(r"history\.append\s*\(.*user|messages\.append\s*\(.*user"),
+                pattern=pattern(
+                    r"history\.append\s*\(.*user|messages\.append\s*\(.*user"
+                ),
                 message="User input appended directly to conversation history",
                 recommendation="Validate and sanitize user messages before adding to history.",
                 severity=Severity.MEDIUM,
@@ -75,4 +82,3 @@ class MemoryPoisoningRule(BaseRule):
                 confidence="low",
             ),
         ]
-

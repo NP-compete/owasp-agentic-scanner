@@ -1,6 +1,11 @@
 """AA10: Model Theft detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class ModelTheftRule(BaseRule):
@@ -39,7 +44,9 @@ class ModelTheftRule(BaseRule):
                 confidence="medium",
             ),
             DetectionPattern(
-                pattern=pattern(r"embed.*api.*public|public.*embed|embedding.*endpoint"),
+                pattern=pattern(
+                    r"embed.*api.*public|public.*embed|embedding.*endpoint"
+                ),
                 message="Public embedding endpoint",
                 recommendation="Protect embedding endpoints. Implement rate limiting.",
                 severity=Severity.MEDIUM,
@@ -53,7 +60,9 @@ class ModelTheftRule(BaseRule):
                 confidence="medium",
             ),
             DetectionPattern(
-                pattern=pattern(r"rate.*limit.*none|no.*rate.*limit|unlimited.*request"),
+                pattern=pattern(
+                    r"rate.*limit.*none|no.*rate.*limit|unlimited.*request"
+                ),
                 message="Missing rate limiting",
                 recommendation="Implement rate limiting to prevent extraction attacks.",
                 severity=Severity.HIGH,
@@ -81,4 +90,3 @@ class ModelTheftRule(BaseRule):
                 confidence="low",
             ),
         ]
-

@@ -1,6 +1,11 @@
 """AA04: Agentic Supply Chain Vulnerabilities detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class SupplyChainRule(BaseRule):
@@ -46,7 +51,9 @@ class SupplyChainRule(BaseRule):
                 confidence="medium",
             ),
             DetectionPattern(
-                pattern=pattern(r"importlib\.import_module\s*\(.*\buser\b|__import__\s*\(.*\buser\b"),
+                pattern=pattern(
+                    r"importlib\.import_module\s*\(.*\buser\b|__import__\s*\(.*\buser\b"
+                ),
                 message="Dynamic import with user input",
                 recommendation="Never dynamically import based on user input. Use allowlists.",
                 severity=Severity.CRITICAL,
@@ -81,4 +88,3 @@ class SupplyChainRule(BaseRule):
                 confidence="high",
             ),
         ]
-

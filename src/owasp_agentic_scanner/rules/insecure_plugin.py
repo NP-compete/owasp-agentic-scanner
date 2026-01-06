@@ -1,6 +1,11 @@
 """AA08: Insecure Plugin Design detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class InsecurePluginRule(BaseRule):
@@ -82,4 +87,3 @@ class InsecurePluginRule(BaseRule):
                 confidence="low",
             ),
         ]
-

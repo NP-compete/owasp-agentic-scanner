@@ -1,6 +1,11 @@
 """AA01: Agent Goal Hijack detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class GoalHijackRule(BaseRule):
@@ -35,7 +40,9 @@ class GoalHijackRule(BaseRule):
                 confidence="medium",
             ),
             DetectionPattern(
-                pattern=pattern(r"\.format\(.*user.*\).*prompt|prompt.*\.format\(.*user"),
+                pattern=pattern(
+                    r"\.format\(.*user.*\).*prompt|prompt.*\.format\(.*user"
+                ),
                 message="String format with user input in prompt",
                 recommendation="Use parameterized prompts with input sanitization.",
                 severity=Severity.HIGH,
@@ -56,7 +63,9 @@ class GoalHijackRule(BaseRule):
                 confidence="medium",
             ),
             DetectionPattern(
-                pattern=pattern(r"system_message.*user_input|user_input.*system_message"),
+                pattern=pattern(
+                    r"system_message.*user_input|user_input.*system_message"
+                ),
                 message="User input referenced in system message context",
                 recommendation="Validate and sanitize user input before any system context usage.",
                 severity=Severity.HIGH,
@@ -70,11 +79,12 @@ class GoalHijackRule(BaseRule):
                 confidence="high",
             ),
             DetectionPattern(
-                pattern=pattern(r"you\s+are\s+now|new\s+instructions|forget\s+everything"),
+                pattern=pattern(
+                    r"you\s+are\s+now|new\s+instructions|forget\s+everything"
+                ),
                 message="Potential prompt injection payload detected",
                 recommendation="Implement input validation to detect and block injection attempts.",
                 severity=Severity.HIGH,
                 confidence="medium",
             ),
         ]
-

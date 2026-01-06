@@ -1,7 +1,7 @@
 """Console reporter for scan results."""
 
 from collections import defaultdict
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from rich.console import Console
 from rich.panel import Panel
@@ -9,13 +9,13 @@ from rich.table import Table
 from rich.text import Text
 
 if TYPE_CHECKING:
-    from rules.base import Finding, Severity
+    from owasp_agentic_scanner.rules.base import Finding
 
 
 class ConsoleReporter:
     """Rich console output for scan results."""
 
-    SEVERITY_COLORS = {
+    SEVERITY_COLORS: ClassVar[dict[str, str]] = {
         "critical": "bold red",
         "high": "red",
         "medium": "yellow",
@@ -23,7 +23,7 @@ class ConsoleReporter:
         "info": "dim",
     }
 
-    SEVERITY_ICONS = {
+    SEVERITY_ICONS: ClassVar[dict[str, str]] = {
         "critical": "[!]",
         "high": "[H]",
         "medium": "[M]",
@@ -47,7 +47,7 @@ class ConsoleReporter:
             return
 
         # Group by severity
-        by_severity: dict[str, list["Finding"]] = defaultdict(list)
+        by_severity: dict[str, list[Finding]] = defaultdict(list)
         for f in findings:
             by_severity[f.severity.value].append(f)
 
@@ -57,7 +57,7 @@ class ConsoleReporter:
         self.console.print()
 
         # Findings by category
-        by_category: dict[str, list["Finding"]] = defaultdict(list)
+        by_category: dict[str, list[Finding]] = defaultdict(list)
         for f in findings:
             by_category[f.owasp_category].append(f)
 
@@ -140,4 +140,3 @@ class ConsoleReporter:
                 title=f"[{sev_color}]Finding Details[/{sev_color}]",
             )
         )
-

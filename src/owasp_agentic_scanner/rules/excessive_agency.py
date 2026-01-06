@@ -1,6 +1,11 @@
 """AA07: Excessive Agency detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class ExcessiveAgencyRule(BaseRule):
@@ -68,7 +73,9 @@ class ExcessiveAgencyRule(BaseRule):
                 confidence="high",
             ),
             DetectionPattern(
-                pattern=pattern(r"send.*email.*auto|auto.*send.*message|post.*social.*auto"),
+                pattern=pattern(
+                    r"send.*email.*auto|auto.*send.*message|post.*social.*auto"
+                ),
                 message="Automatic external communication",
                 recommendation="Require human review before sending external communications.",
                 severity=Severity.HIGH,
@@ -82,4 +89,3 @@ class ExcessiveAgencyRule(BaseRule):
                 confidence="high",
             ),
         ]
-

@@ -1,6 +1,11 @@
 """AA05: Unexpected Code Execution detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class CodeExecutionRule(BaseRule):
@@ -53,7 +58,9 @@ class CodeExecutionRule(BaseRule):
                 confidence="medium",
             ),
             DetectionPattern(
-                pattern=pattern(r"llm.*code.*execute|execute.*llm.*code|agent.*generate.*code.*run"),
+                pattern=pattern(
+                    r"llm.*code.*execute|execute.*llm.*code|agent.*generate.*code.*run"
+                ),
                 message="LLM-generated code execution",
                 recommendation="Never execute LLM-generated code without human review and sandboxing.",
                 severity=Severity.CRITICAL,
@@ -81,4 +88,3 @@ class CodeExecutionRule(BaseRule):
                 confidence="high",
             ),
         ]
-

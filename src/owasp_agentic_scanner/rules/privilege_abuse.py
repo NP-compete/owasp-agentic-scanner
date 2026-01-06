@@ -1,6 +1,11 @@
 """AA03: Identity & Privilege Abuse detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class PrivilegeAbuseRule(BaseRule):
@@ -18,7 +23,9 @@ class PrivilegeAbuseRule(BaseRule):
     def _get_patterns(self) -> list[DetectionPattern]:
         return [
             DetectionPattern(
-                pattern=pattern(r"(api_key|apikey|secret|password|token)\s*=\s*[\"'][^\"']+[\"']"),
+                pattern=pattern(
+                    r"(api_key|apikey|secret|password|token)\s*=\s*[\"'][^\"']+[\"']"
+                ),
                 message="Hardcoded credential detected",
                 recommendation="Use environment variables or secrets management for credentials.",
                 severity=Severity.CRITICAL,
@@ -74,4 +81,3 @@ class PrivilegeAbuseRule(BaseRule):
                 confidence="medium",
             ),
         ]
-
