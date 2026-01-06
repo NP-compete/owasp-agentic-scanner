@@ -1,6 +1,11 @@
 """AA02: Tool Misuse & Exploitation detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class ToolMisuseRule(BaseRule):
@@ -75,4 +80,3 @@ class ToolMisuseRule(BaseRule):
                 confidence="medium",
             ),
         ]
-

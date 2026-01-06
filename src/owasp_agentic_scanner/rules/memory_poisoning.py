@@ -1,6 +1,11 @@
 """AA06: Memory Poisoning detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class MemoryPoisoningRule(BaseRule):
@@ -75,4 +80,3 @@ class MemoryPoisoningRule(BaseRule):
                 confidence="low",
             ),
         ]
-

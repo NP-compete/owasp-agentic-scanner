@@ -1,6 +1,11 @@
 """AA10: Model Theft detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class ModelTheftRule(BaseRule):
@@ -81,4 +86,3 @@ class ModelTheftRule(BaseRule):
                 confidence="low",
             ),
         ]
-

@@ -1,6 +1,11 @@
 """AA01: Agent Goal Hijack detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class GoalHijackRule(BaseRule):
@@ -14,9 +19,7 @@ class GoalHijackRule(BaseRule):
     rule_id = "AA01"
     rule_name = "Agent Goal Hijack"
     owasp_category = "AA01: Agent Goal Hijack"
-    description = (
-        "Detects patterns that could allow attackers to hijack agent objectives"
-    )
+    description = "Detects patterns that could allow attackers to hijack agent objectives"
 
     def _get_patterns(self) -> list[DetectionPattern]:
         return [
@@ -77,4 +80,3 @@ class GoalHijackRule(BaseRule):
                 confidence="medium",
             ),
         ]
-

@@ -1,11 +1,11 @@
 """JSON reporter for scan results."""
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
-    from rules.base import Finding
+    from owasp_agentic_scanner.rules.base import Finding
 
 
 class JsonReporter:
@@ -32,7 +32,7 @@ class JsonReporter:
 
         return {
             "scan_metadata": {
-                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "timestamp": datetime.now(UTC).isoformat(),
                 "scan_path": scan_path,
                 "scanner": "OWASP Agentic AI Top 10 Scanner",
                 "version": "0.1.0",
@@ -45,11 +45,8 @@ class JsonReporter:
             "findings": [f.to_dict() for f in findings],
         }
 
-    def report_to_file(
-        self, findings: list["Finding"], scan_path: str, output_path: str
-    ) -> None:
+    def report_to_file(self, findings: list["Finding"], scan_path: str, output_path: str) -> None:
         """Write JSON report to file."""
         report = self.report(findings, scan_path)
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(report)
-

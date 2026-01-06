@@ -1,6 +1,11 @@
 """AA07: Excessive Agency detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class ExcessiveAgencyRule(BaseRule):
@@ -82,4 +87,3 @@ class ExcessiveAgencyRule(BaseRule):
                 confidence="high",
             ),
         ]
-

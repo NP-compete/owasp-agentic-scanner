@@ -1,6 +1,11 @@
 """AA09: Overreliance on Agentic Outputs detection rule."""
 
-from rules.base import BaseRule, DetectionPattern, Severity, pattern
+from owasp_agentic_scanner.rules.base import (
+    BaseRule,
+    DetectionPattern,
+    Severity,
+    pattern,
+)
 
 
 class OverrelianceRule(BaseRule):
@@ -74,4 +79,3 @@ class OverrelianceRule(BaseRule):
                 confidence="high",
             ),
         ]
-
