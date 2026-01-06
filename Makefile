@@ -1,4 +1,4 @@
-.PHONY: help install install-dev lint format type-check test test-cov clean build
+.PHONY: help install install-dev lint format type-check test test-cov clean build pre-commit-install
 
 # Default target
 help:
@@ -9,10 +9,11 @@ help:
 	@echo "  install-dev    Install development dependencies"
 	@echo ""
 	@echo "Quality:"
-	@echo "  lint           Run ruff linter"
-	@echo "  format         Format code with ruff"
-	@echo "  type-check     Run mypy type checking"
-	@echo "  pre-commit     Run all checks (lint, type-check, test)"
+	@echo "  lint              Run ruff linter"
+	@echo "  format            Format code with ruff"
+	@echo "  type-check        Run mypy type checking"
+	@echo "  pre-commit        Run all checks (lint, type-check, test)"
+	@echo "  pre-commit-install Install pre-commit git hooks"
 	@echo ""
 	@echo "Testing:"
 	@echo "  test           Run tests"
@@ -31,6 +32,10 @@ install:
 
 install-dev:
 	uv sync --all-extras
+	uv run pre-commit install
+
+pre-commit-install:
+	uv run pre-commit install
 
 # Quality
 lint:
