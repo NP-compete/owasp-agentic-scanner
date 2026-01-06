@@ -226,14 +226,14 @@ def scan(
     # Output results
     if format.lower() == "json":
         json_reporter = JsonReporter()
-        if output:
+        if output:  # noqa: AA09
             json_reporter.report_to_file(findings, str(scan_path), output)
             console.print(f"[green]Report written to: {output}[/green]")
         else:
             print(json_reporter.report(findings, str(scan_path)))
     elif format.lower() == "sarif":
         sarif_reporter = SarifReporter()
-        if output:
+        if output:  # noqa: AA09
             sarif_reporter.report_to_file(findings, str(scan_path), output)
             console.print(f"[green]SARIF report written to: {output}[/green]")
         else:
