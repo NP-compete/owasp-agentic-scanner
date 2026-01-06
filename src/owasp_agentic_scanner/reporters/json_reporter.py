@@ -16,9 +16,7 @@ class JsonReporter:
         report_data = self._build_report(findings, scan_path)
         return json.dumps(report_data, indent=2)
 
-    def _build_report(
-        self, findings: list["Finding"], scan_path: str
-    ) -> dict[str, Any]:
+    def _build_report(self, findings: list["Finding"], scan_path: str) -> dict[str, Any]:
         """Build the report data structure."""
         # Count by severity
         severity_counts: dict[str, int] = {}
@@ -47,9 +45,7 @@ class JsonReporter:
             "findings": [f.to_dict() for f in findings],
         }
 
-    def report_to_file(
-        self, findings: list["Finding"], scan_path: str, output_path: str
-    ) -> None:
+    def report_to_file(self, findings: list["Finding"], scan_path: str, output_path: str) -> None:
         """Write JSON report to file."""
         report = self.report(findings, scan_path)
         with open(output_path, "w", encoding="utf-8") as f:

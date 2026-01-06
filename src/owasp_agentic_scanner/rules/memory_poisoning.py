@@ -31,9 +31,7 @@ class MemoryPoisoningRule(BaseRule):
                 confidence="medium",
             ),
             DetectionPattern(
-                pattern=pattern(
-                    r"history\.append\s*\(.*user|messages\.append\s*\(.*user"
-                ),
+                pattern=pattern(r"history\.append\s*\(.*user|messages\.append\s*\(.*user"),
                 message="User input appended directly to conversation history",
                 recommendation="Validate and sanitize user messages before adding to history.",
                 severity=Severity.MEDIUM,

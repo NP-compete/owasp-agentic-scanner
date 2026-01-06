@@ -74,9 +74,7 @@ def get_rules_by_filter(rule_filter: str | None) -> list[BaseRule]:
             selected_ids.add(name.upper())
 
     if not selected_ids:
-        console.print(
-            f"[yellow]Warning: No rules matched filter '{rule_filter}'[/yellow]"
-        )
+        console.print(f"[yellow]Warning: No rules matched filter '{rule_filter}'[/yellow]")
         return list(ALL_RULES)
 
     return [r for r in ALL_RULES if r.rule_id in selected_ids]
@@ -127,9 +125,7 @@ def scan_codebase(
             for rule in rules:
                 for file_path in files_to_scan:
                     if rule.should_scan_file(file_path):
-                        futures.append(
-                            executor.submit(scan_file_with_rule, rule, file_path)
-                        )
+                        futures.append(executor.submit(scan_file_with_rule, rule, file_path))
 
             for future in as_completed(futures):
                 try:
@@ -220,16 +216,12 @@ def scan(
                 scan_path, selected_rules, parallel=parallel, max_workers=workers
             )
     else:
-        findings = scan_codebase(
-            scan_path, selected_rules, parallel=parallel, max_workers=workers
-        )
+        findings = scan_codebase(scan_path, selected_rules, parallel=parallel, max_workers=workers)
 
     # Filter by minimum severity
     severity_order = {"critical": 0, "high": 1, "medium": 2, "low": 3, "info": 4}
     min_sev_level = severity_order.get(min_severity.lower(), 4)
-    findings = [
-        f for f in findings if severity_order.get(f.severity.value, 4) <= min_sev_level
-    ]
+    findings = [f for f in findings if severity_order.get(f.severity.value, 4) <= min_sev_level]
 
     # Output results
     if format.lower() == "json":

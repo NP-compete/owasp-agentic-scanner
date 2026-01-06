@@ -72,9 +72,7 @@ class OverrelianceRule(BaseRule):
                 confidence="low",
             ),
             DetectionPattern(
-                pattern=pattern(
-                    r"fact.*check.*false|verify.*false|validate.*=\s*False"
-                ),
+                pattern=pattern(r"fact.*check.*false|verify.*false|validate.*=\s*False"),
                 message="Validation explicitly disabled",
                 recommendation="Always enable validation for agent outputs.",
                 severity=Severity.HIGH,

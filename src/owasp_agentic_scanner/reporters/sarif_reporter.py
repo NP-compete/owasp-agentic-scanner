@@ -13,8 +13,7 @@ if TYPE_CHECKING:
 
 SARIF_VERSION = "2.1.0"
 SARIF_SCHEMA = (
-    "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/"
-    "master/Schemata/sarif-schema-2.1.0.json"
+    "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json"
 )
 
 
@@ -34,9 +33,7 @@ class SarifReporter:
         report_data = self._build_report(findings, scan_path)
         return json.dumps(report_data, indent=2)
 
-    def _build_report(
-        self, findings: list["Finding"], scan_path: str
-    ) -> dict[str, Any]:
+    def _build_report(self, findings: list["Finding"], scan_path: str) -> dict[str, Any]:
         """Build the SARIF report structure."""
         rules = self._build_rules(findings)
         results = self._build_results(findings)
@@ -85,9 +82,7 @@ class SarifReporter:
                     "helpUri": f"https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/#{f.rule_id.lower()}",
                     "properties": {
                         "category": f.owasp_category,
-                        "security-severity": self._get_security_severity(
-                            f.severity.value
-                        ),
+                        "security-severity": self._get_security_severity(f.severity.value),
                     },
                 }
 
@@ -102,9 +97,7 @@ class SarifReporter:
                 {
                     "ruleId": f.rule_id,
                     "level": self.SEVERITY_MAP.get(f.severity.value, "warning"),
-                    "message": {
-                        "text": f"{f.message}\n\nRecommendation: {f.recommendation}"
-                    },
+                    "message": {"text": f"{f.message}\n\nRecommendation: {f.recommendation}"},
                     "locations": [
                         {
                             "physicalLocation": {
@@ -136,9 +129,7 @@ class SarifReporter:
         }
         return scores.get(severity, "5.0")
 
-    def report_to_file(
-        self, findings: list["Finding"], scan_path: str, output_path: str
-    ) -> None:
+    def report_to_file(self, findings: list["Finding"], scan_path: str, output_path: str) -> None:
         """Write SARIF report to file."""
         report = self.report(findings, scan_path)
         with open(output_path, "w", encoding="utf-8") as f:

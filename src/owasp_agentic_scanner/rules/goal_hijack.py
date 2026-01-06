@@ -19,9 +19,7 @@ class GoalHijackRule(BaseRule):
     rule_id = "AA01"
     rule_name = "Agent Goal Hijack"
     owasp_category = "AA01: Agent Goal Hijack"
-    description = (
-        "Detects patterns that could allow attackers to hijack agent objectives"
-    )
+    description = "Detects patterns that could allow attackers to hijack agent objectives"
 
     def _get_patterns(self) -> list[DetectionPattern]:
         return [
@@ -40,9 +38,7 @@ class GoalHijackRule(BaseRule):
                 confidence="medium",
             ),
             DetectionPattern(
-                pattern=pattern(
-                    r"\.format\(.*user.*\).*prompt|prompt.*\.format\(.*user"
-                ),
+                pattern=pattern(r"\.format\(.*user.*\).*prompt|prompt.*\.format\(.*user"),
                 message="String format with user input in prompt",
                 recommendation="Use parameterized prompts with input sanitization.",
                 severity=Severity.HIGH,
@@ -63,9 +59,7 @@ class GoalHijackRule(BaseRule):
                 confidence="medium",
             ),
             DetectionPattern(
-                pattern=pattern(
-                    r"system_message.*user_input|user_input.*system_message"
-                ),
+                pattern=pattern(r"system_message.*user_input|user_input.*system_message"),
                 message="User input referenced in system message context",
                 recommendation="Validate and sanitize user input before any system context usage.",
                 severity=Severity.HIGH,
@@ -79,9 +73,7 @@ class GoalHijackRule(BaseRule):
                 confidence="high",
             ),
             DetectionPattern(
-                pattern=pattern(
-                    r"you\s+are\s+now|new\s+instructions|forget\s+everything"
-                ),
+                pattern=pattern(r"you\s+are\s+now|new\s+instructions|forget\s+everything"),
                 message="Potential prompt injection payload detected",
                 recommendation="Implement input validation to detect and block injection attempts.",
                 severity=Severity.HIGH,

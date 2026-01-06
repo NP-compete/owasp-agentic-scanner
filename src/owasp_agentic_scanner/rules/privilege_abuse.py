@@ -23,9 +23,7 @@ class PrivilegeAbuseRule(BaseRule):
     def _get_patterns(self) -> list[DetectionPattern]:
         return [
             DetectionPattern(
-                pattern=pattern(
-                    r"(api_key|apikey|secret|password|token)\s*=\s*[\"'][^\"']+[\"']"
-                ),
+                pattern=pattern(r"(api_key|apikey|secret|password|token)\s*=\s*[\"'][^\"']+[\"']"),
                 message="Hardcoded credential detected",
                 recommendation="Use environment variables or secrets management for credentials.",
                 severity=Severity.CRITICAL,

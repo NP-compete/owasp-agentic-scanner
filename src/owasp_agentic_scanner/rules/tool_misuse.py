@@ -24,9 +24,7 @@ class ToolMisuseRule(BaseRule):
     def _get_patterns(self) -> list[DetectionPattern]:
         return [
             DetectionPattern(
-                pattern=pattern(
-                    r"@tool\s*\n\s*def\s+\w+\([^)]*\).*:(?!\s*\n\s*\"\"\".*validat)"
-                ),
+                pattern=pattern(r"@tool\s*\n\s*def\s+\w+\([^)]*\).*:(?!\s*\n\s*\"\"\".*validat)"),
                 message="Tool function without input validation documentation",
                 recommendation="Add input validation to all tool functions and document validation in docstring.",
                 severity=Severity.MEDIUM,
@@ -54,9 +52,7 @@ class ToolMisuseRule(BaseRule):
                 confidence="high",
             ),
             DetectionPattern(
-                pattern=pattern(
-                    r"def\s+\w+_tool.*:\s*\n(?:.*\n)*?.*open\s*\([^)]*,\s*['\"]w"
-                ),
+                pattern=pattern(r"def\s+\w+_tool.*:\s*\n(?:.*\n)*?.*open\s*\([^)]*,\s*['\"]w"),
                 message="Tool with file write capability",
                 recommendation="Restrict file write paths. Use allowlists for writable directories.",
                 severity=Severity.HIGH,
