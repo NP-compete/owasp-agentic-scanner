@@ -392,6 +392,8 @@ def scan(
                 findings = scanner.scan(
                     scan_path, parallel=parallel, files_to_scan=files_to_scan, cache=cache
                 )
+            # Filter suppressed findings from optimized scanner
+            findings = filter_suppressed(findings)
         except ImportError:
             logger.warning("Optimized scanner not available, using standard scanner")
             use_optimized = False
