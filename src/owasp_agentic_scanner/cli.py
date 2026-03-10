@@ -405,6 +405,8 @@ def scan(
                     findings = scanner.scan(scan_path, parallel=parallel)
             else:
                 findings = scanner.scan(scan_path, parallel=parallel)
+            # Filter suppressed findings
+            findings = filter_suppressed(findings)
             # Manual filtering if needed
             if git_diff and files_to_scan:
                 files_to_scan_strs = {str(p) for p in files_to_scan}
