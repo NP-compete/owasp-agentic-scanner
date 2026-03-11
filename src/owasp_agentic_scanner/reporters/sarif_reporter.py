@@ -1,7 +1,8 @@
 """SARIF reporter for scan results.
 
 SARIF (Static Analysis Results Interchange Format) is a standard format
-for static analysis tools, enabling integration with CI/CD systems.
+for static analysis tools, enabling integration with CI/CD systems and
+GitHub Code Scanning.
 """
 
 import json
