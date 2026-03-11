@@ -47,7 +47,7 @@ class SarifReporter:
                         "driver": {
                             "name": "OWASP Agentic AI Scanner",
                             "version": "0.1.0",
-                            "informationUri": "https://github.com/NP-compete/owasp-agentic-ai-security-scanner",
+                            "informationUri": "https://github.com/NP-compete/owasp-agentic-scanner",
                             "rules": rules,
                         }
                     },
