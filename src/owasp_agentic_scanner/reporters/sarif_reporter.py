@@ -1,7 +1,8 @@
 """SARIF reporter for scan results.
 
 SARIF (Static Analysis Results Interchange Format) is a standard format
-for static analysis tools, enabling integration with CI/CD systems.
+for static analysis tools, enabling integration with CI/CD systems and
+GitHub Code Scanning.
 """
 
 import json
@@ -47,7 +48,7 @@ class SarifReporter:
                         "driver": {
                             "name": "OWASP Agentic AI Scanner",
                             "version": "0.1.0",
-                            "informationUri": "https://github.com/NP-compete/owasp-agentic-ai-security-scanner",
+                            "informationUri": "https://github.com/NP-compete/owasp-agentic-scanner",
                             "rules": rules,
                         }
                     },
