@@ -38,7 +38,7 @@ owasp-scan scan src --parallel --workers 8
 # Incremental scanning with cache
 owasp-scan scan src --cache --cache-dir .owasp-cache
 
-# Scan only git-changed files
+# Scan only git-changed Modify
 owasp-scan scan src --git-diff main
 
 # Use baseline to track known issues
