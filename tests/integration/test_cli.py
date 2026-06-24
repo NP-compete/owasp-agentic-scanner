@@ -241,6 +241,48 @@ parallel = false
         # Should suppress the finding
         assert result.exit_code == 0
 
+    def test_scan_noqa_suppresses_multiple_rules_on_one_line(self, tmp_path: Path) -> None:
+        """Inline `# noqa: AA04,AA05` should suppress every listed rule on the line.
+
+        Regression test for the OptimizedScanner path, which previously never
+        applied filter_suppressed(), so multi-rule suppressions leaked through.
+        `pickle.loads(...)` triggers both AA04 and AA05 on the same line.
+        """
+        output_file = tmp_path / "results.json"
+
+        # Sanity check: without suppression both findings are reported.
+        unsuppressed = tmp_path / "unsuppressed.py"
+        unsuppressed.write_text("pickle.loads(data)\n")
+        runner.invoke(
+            app, ["scan", str(unsuppressed), "--format", "json", "--output", str(output_file)]
+        )
+        rule_ids = {f["rule_id"] for f in json.loads(output_file.read_text())["findings"]}
+        assert {"AA04", "AA05"} <= rule_ids
+
+        # With a multi-rule noqa, both findings on the line are suppressed.
+        suppressed = tmp_path / "suppressed.py"
+        suppressed.write_text("pickle.loads(data)  # noqa: AA04,AA05\n")
+        result = runner.invoke(
+            app, ["scan", str(suppressed), "--format", "json", "--output", str(output_file)]
+        )
+        findings = json.loads(output_file.read_text())["findings"]
+        assert findings == []
+        assert result.exit_code == 0
+
+    def test_scan_noqa_all_suppresses_every_finding(self, tmp_path: Path) -> None:
+        """Inline `# noqa: ALL` should suppress all findings on the line."""
+        output_file = tmp_path / "results.json"
+        test_file = tmp_path / "test.py"
+        test_file.write_text('eval("2 + 2")  # noqa: ALL\n')
+
+        result = runner.invoke(
+            app, ["scan", str(test_file), "--format", "json", "--output", str(output_file)]
+        )
+
+        findings = json.loads(output_file.read_text())["findings"]
+        assert findings == []
+        assert result.exit_code == 0
+
     def test_scan_json_output_to_stdout(self, tmp_path: Path) -> None:
         """Test JSON output to stdout."""
         test_file = tmp_path / "test.py"

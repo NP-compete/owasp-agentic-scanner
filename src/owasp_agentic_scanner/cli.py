@@ -408,6 +408,13 @@ def scan(
                 files_to_scan_strs = {str(p) for p in files_to_scan}
                 findings = [f for f in findings if str(f.file_path) in files_to_scan_strs]
 
+    # The OptimizedScanner does not apply inline noqa suppression itself, so
+    # filter its findings here to match the legacy scan_codebase() path.
+    # When use_optimized is False (ImportError fallback), scan_codebase()
+    # already filters, so we skip it here to avoid double work.
+    if use_optimized:
+        findings = filter_suppressed(findings)
+
     if not use_optimized:
         # Use original scanner
         if format.lower() == "console":
